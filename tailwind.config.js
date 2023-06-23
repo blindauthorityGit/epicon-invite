@@ -9,15 +9,18 @@ module.exports = {
             sm: "640px",
             md: "768px",
             lg: "768px",
-            xl: "960px",
-            "2xl": "1980px",
+            xl: "1024px",
+            "2xl": "1440px",
         },
         container: {
-            sm: "100%",
-            md: "960px",
-            lg: "1024px",
-            xl: "1440px",
-            "2xl": "calc((100vw - 1680px) / 2)",
+            padding: "14rem",
+            screens: {
+                sm: "640px",
+                md: "768px",
+                lg: "768px",
+                xl: "960px",
+                "2xl": "1240px",
+            },
         },
         extend: {
             fontFamily: {
@@ -33,5 +36,28 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    corePlugins: {
+        container: false,
+    },
+    plugins: [
+        function ({ addComponents }) {
+            addComponents({
+                ".container": {
+                    maxWidth: "100%",
+                    "@screen sm": {
+                        maxWidth: "440px",
+                    },
+                    "@screen md": {
+                        maxWidth: "568px",
+                    },
+                    "@screen lg": {
+                        maxWidth: "660px",
+                    },
+                    "@screen xl": {
+                        maxWidth: "760px",
+                    },
+                },
+            });
+        },
+    ],
 };
