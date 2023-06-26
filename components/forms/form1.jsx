@@ -126,9 +126,9 @@ const Form1 = (props) => {
                         value={number}
                         onChange={(e) => setNumber(parseInt(e.target.value))}
                     />
-                    <div className="wrapper flex flex-col space-y-1 col-span-2 sm:col-span-1 items-center">
+                    <div className="wrapper hidden lg:flex flex-col space-y-1 col-span-2 sm:col-span-1 items-center">
                         <button
-                            className="bg-[#3785d0] hover:bg-[#15395b] transition-all duration-300 w-[55%] text-white rounded-full flex items-center justify-center font-facundosemiboldNEU text-xl"
+                            className="bg-[#3785d0]  hover:bg-[#15395b] transition-all duration-300 w-[55%] text-white rounded-full flex items-center justify-center font-facundosemiboldNEU text-xl"
                             type="button"
                             onClick={incrementNumber}
                         >
@@ -175,7 +175,7 @@ const Form1 = (props) => {
                             />
                         </div>
                     ) : (
-                        <div className="w-full col-span-12">
+                        <div className="w-full col-span-12 mt-8 lg:mt-4">
                             <button
                                 className="bg-[#3785d0] hover:bg-[#15395b] transition-all duration-300 px-8 py-2 rounded-lg text-white font-facundosemiboldNEU text-lg mt-4"
                                 type="submit"

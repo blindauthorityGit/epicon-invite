@@ -45,11 +45,18 @@ export default async (req, res) => {
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Firma:<br/></strong> ${firma}</p>
-            <p><strong>Abzahl Begleitpersonen:<br/></strong> ${anzahl}</p>
+            <p><strong>Anzahl Begleitpersonen:<br/></strong> ${anzahl}</p>
+        `;
+        const htmlConfirm = `
+            <p>Sehr geehrte/r ${name}</p>
+            <p><Vielen Dank für Ihre Anmeldung für unser Event.</p>
+            <p>Wir haben Sie inkl ${anzahl} Begleitpersonen für unseren Event registriert.</p>
+            <p>Wir freuen uns auf Ihren Besuch!</p>
         `;
 
         // send the email
         await sendEmail("johabuch@gmail.com", `Anmeldung von ${name}`, html, email);
+        await sendEmail(email, `Anmeldebestätigung für Epicon`, htmlConfirm, email);
 
         // return success response
         res.status(200).json(req.body);
