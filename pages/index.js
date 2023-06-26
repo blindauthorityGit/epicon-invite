@@ -10,7 +10,7 @@ import ImpressumModal from "../components/modalContent";
 import BGDesktop from "../assets/bgDesktop.jpg";
 import TenYears from "../assets/SVG/10years.svg";
 import Studio67 from "../assets/1x/studio67.png";
-import Epicon from "../assets/svg/epicon.svg";
+import Epicon from "../assets/SVG/epicon.svg";
 
 export default function Home() {
     const [showModal, setShowModal] = useState(false);
