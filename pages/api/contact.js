@@ -1,4 +1,6 @@
 const nodemailer = require("nodemailer");
+//DB STUFF
+import createUser from "./createUser";
 
 const sendEmail = async (to, subject, html, email) => {
     console.log(
@@ -28,8 +30,6 @@ const sendEmail = async (to, subject, html, email) => {
             subject,
             html,
         });
-
-        console.log("Email sent successfully");
     } catch (error) {
         console.log("Error sending email: ", error);
     }
@@ -38,28 +38,55 @@ const sendEmail = async (to, subject, html, email) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
     const { firstName, name, email, firma, anzahl } = req.body;
-
+    console.log(firstName, name, email, firma, anzahl);
     if (!firstName) {
-        // construct the html message
-        const html = `
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Firma:<br/></strong> ${firma}</p>
-            <p><strong>Anzahl Begleitpersonen:<br/></strong> ${anzahl}</p>
-        `;
-        const htmlConfirm = `
-            <p>Sehr geehrte/r ${name}</p>
-            <p><Vielen Dank für Ihre Anmeldung für unser Event.</p>
-            <p>Wir haben Sie inkl ${anzahl} Begleitpersonen für unseren Event registriert.</p>
-            <p>Wir freuen uns auf Ihren Besuch!</p>
-        `;
+        let success = false;
+        try {
+            // save to DB
+            await createUser(req, res);
+            success = true;
+            console.log(success);
+        } catch (error) {
+            console.log("Error saving to DB: ", error);
+            // Handle the error here
+            // You can return an error response or perform a fallback action
+            res.status(500).json({ error: "Failed to save to the database" });
+        }
 
-        // send the email
-        await sendEmail("johabuch@gmail.com", `Anmeldung von ${name}`, html, email);
-        await sendEmail(email, `Anmeldebestätigung für Epicon`, htmlConfirm, email);
+        if (success) {
+            try {
+                // construct the html message
+                const html = `
+                  <p><strong>Name:</strong> ${name}</p>
+                  <p><strong>Email:</strong> ${email}</p>
+                  <p><strong>Firma:<br/></strong> ${firma}</p>
+                  <p><strong>Anzahl Begleitpersonen:<br/></strong> ${anzahl}</p>
+                `;
 
-        // return success response
-        res.status(200).json(req.body);
+                // send the email
+                await sendEmail("johabuch@gmail.com", `Anmeldung von ${name}`, html, email);
+
+                // construct the confirmation email html
+                const htmlConfirm = `
+                  <p>Sehr geehrte/r ${name}</p>
+                  <p>Vielen Dank für Ihre Anmeldung für unser Event.</p>
+                  <p>Wir haben Sie inkl ${anzahl} Begleitpersonen für unseren Event registriert.</p>
+                  <p>Wir freuen uns auf Ihren Besuch!</p>
+                `;
+
+                // send the confirmation email
+                await sendEmail(email, `Anmeldebestätigung für Epicon`, htmlConfirm, email);
+                console.log("Emails sent successfully");
+
+                // return success response
+                res.status(200).json(req.body);
+            } catch (error) {
+                console.log("Error sending email: ", error);
+                // Handle the error here
+                // You can return an error response or perform a fallback action
+                res.status(500).json({ error: "Failed to send the email" });
+            }
+        }
     } else {
         // return error response
         res.status(403).json({ error: "First name is required" });

@@ -36,6 +36,8 @@ const Form1 = (props) => {
             reset();
             setLoading(false);
             setSuccess(true);
+            setError(null); // Set a specific error message to display to the user
+
             console.log(response);
         } catch (err) {
             setLoading(false);
@@ -47,12 +49,14 @@ const Form1 = (props) => {
 
     const incrementNumber = () => {
         setNumber(number + 1);
+        console.log(number);
     };
 
     const decrementNumber = () => {
         if (number >= 1) {
             setNumber(number - 1);
         }
+        console.log(number);
     };
 
     return (
@@ -126,7 +130,7 @@ const Form1 = (props) => {
                         value={number}
                         onChange={(e) => setNumber(parseInt(e.target.value))}
                     />
-                    <div className="wrapper hidden lg:flex flex-col space-y-1 col-span-2 sm:col-span-1 items-center">
+                    {/* <div className="wrapper hidden lg:flex flex-col space-y-1 col-span-2 sm:col-span-1 items-center">
                         <button
                             className="bg-[#3785d0]  hover:bg-[#15395b] transition-all duration-300 w-[55%] text-white rounded-full flex items-center justify-center font-facundosemiboldNEU text-xl"
                             type="button"
@@ -141,7 +145,7 @@ const Form1 = (props) => {
                         >
                             -
                         </button>
-                    </div>
+                    </div> */}
                     <div className="check col-span-12 mt-2">
                         <div className="flex">
                             <input

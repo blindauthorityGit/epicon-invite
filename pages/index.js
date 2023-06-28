@@ -11,9 +11,17 @@ import BGDesktop from "../assets/bgDesktop.jpg";
 import TenYears from "../assets/SVG/10years.svg";
 import Studio67 from "../assets/1x/studio67.png";
 import Epicon from "../assets/SVG/epicon.svg";
+//DB
+import { PrismaClient } from "@prisma/client";
 
 export default function Home() {
     const [showModal, setShowModal] = useState(false);
+    useEffect(() => {
+        fetch("/api/entries")
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.error(error));
+    }, []);
 
     return (
         <div className="w-full 2xl:h-screen bg-cover" style={{ backgroundImage: `url(${BGDesktop.src})` }}>
