@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 //DB STUFF
 import createUser from "./createUser";
+import saveContactData from "./saveContactData";
 
 const sendEmail = async (to, subject, html, email) => {
     console.log(
@@ -37,13 +38,30 @@ const sendEmail = async (to, subject, html, email) => {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
-    const { firstName, name, email, firma, anzahl } = req.body;
-    console.log(firstName, name, email, firma, anzahl);
+    const { firstName, name, email, firma, anzahl, ...dynamicFields } = req.body;
+    // console.log(firstName, name, email, firma, anzahl, ...dynamicFields);
+    console.log(req.body);
+
+    const begleitung = Object.keys(dynamicFields)
+        .filter((key) => key.startsWith("begleitungName"))
+        .map((key) => dynamicFields[key]);
+    console.log(begleitung);
     if (!firstName) {
         let success = false;
         try {
             // save to DB
-            await createUser(req, res);
+            // await createUser(req, res);
+            const contactData = {
+                name,
+                email,
+                firma,
+                anzahl,
+                begleitung,
+                createdAt: new Date(), // Optionally include a timestamp
+            };
+            console.log("TEST: ", contactData);
+
+            await saveContactData(contactData);
             success = true;
             console.log(success);
         } catch (error) {
@@ -61,6 +79,7 @@ export default async (req, res) => {
                   <p><strong>Email:</strong> ${email}</p>
                   <p><strong>Firma:<br/></strong> ${firma}</p>
                   <p><strong>Anzahl Begleitpersonen:<br/></strong> ${anzahl}</p>
+                  ${begleitung.map((e, i) => `<p>${e}</p>`)}
                 `;
 
                 // send the email
@@ -71,6 +90,12 @@ export default async (req, res) => {
                   <p>Sehr geehrte/r ${name}</p>
                   <p>Vielen Dank für Ihre Anmeldung für unser Event.</p>
                   <p>Wir haben Sie inkl ${anzahl} Begleitpersonen für unseren Event registriert.</p>
+                  ${
+                      begleitung.length > 0
+                          ? `<p>Die Begleitpersonen:                   ${begleitung.map((e, i) => `<p>${e}</p>`)}
+                  `
+                          : null
+                  }
                   <p>Wir freuen uns auf Ihren Besuch!</p>
                 `;
 

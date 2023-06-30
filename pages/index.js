@@ -16,15 +16,10 @@ import { PrismaClient } from "@prisma/client";
 
 export default function Home() {
     const [showModal, setShowModal] = useState(false);
-    useEffect(() => {
-        fetch("/api/entries")
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
-    }, []);
+    useEffect(() => {}, []);
 
     return (
-        <div className="w-full 2xl:h-screen bg-cover" style={{ backgroundImage: `url(${BGDesktop.src})` }}>
+        <div className="w-full 2xl:min-h-screen bg-cover" style={{ backgroundImage: `url(${BGDesktop.src})` }}>
             <Head>
                 <title>Site title</title>
             </Head>
@@ -34,7 +29,6 @@ export default function Home() {
                     <Modal
                         onClick={() => {
                             setShowModal(false);
-                            console.log("BUBU");
                         }}
                     >
                         <ImpressumModal></ImpressumModal>
@@ -42,7 +36,6 @@ export default function Home() {
                     <Overlay
                         onClick={() => {
                             setShowModal(false);
-                            console.log("BUBU");
                         }}
                     ></Overlay>
                 </>

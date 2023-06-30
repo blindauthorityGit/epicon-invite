@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Error from "./error";
 import axios from "axios";
 import { Rings } from "react-loader-spinner";
+import { setLogLevel } from "firebase/app";
 
 const Form1 = (props) => {
     const [loading, setLoading] = useState(false);
@@ -128,7 +129,10 @@ const Form1 = (props) => {
                         id="anzahl"
                         className="sm:col-span-12 col-span-2 mr-3 flex text-center justify-center items-center font-facundosemiboldNEU shadow-lg lg:col-span-2 text-sm sm:text-lg bg-transparent text-primaryColor-800 placeholder-primaryColor-500 p-2 sm:p-2"
                         value={number}
-                        onChange={(e) => setNumber(parseInt(e.target.value))}
+                        onChange={(e) => {
+                            setNumber(parseInt(e.target.value));
+                            console.log(number);
+                        }}
                     />
                     {/* <div className="wrapper hidden lg:flex flex-col space-y-1 col-span-2 sm:col-span-1 items-center">
                         <button
@@ -146,6 +150,18 @@ const Form1 = (props) => {
                             -
                         </button>
                     </div> */}
+                    {/* Render the "begleitung name" input fields */}
+                    {Array.from({ length: number }, (_, index) => (
+                        <input
+                            key={index}
+                            {...register(`begleitungName${index + 1}`, { required: true })}
+                            name={`begleitungName${index + 1}`}
+                            id={`begleitungName${index + 1}`}
+                            className="col-span-12 font-facundosemiboldNEU shadow-lg lg:col-span-12 text-sm sm:text-lg  bg-transparent text-primaryColor-800 placeholder-primaryColor-500 p-2 sm:p-2"
+                            type="text"
+                            placeholder={`Begleitung ${index + 1} Name`}
+                        />
+                    ))}
                     <div className="check col-span-12 mt-2">
                         <div className="flex">
                             <input
