@@ -157,7 +157,7 @@ const Form1 = (props) => {
                             {...register(`begleitungName${index + 1}`, { required: true })}
                             name={`begleitungName${index + 1}`}
                             id={`begleitungName${index + 1}`}
-                            className="col-span-12 font-facundosemiboldNEU shadow-lg lg:col-span-12 text-sm sm:text-lg  bg-transparent text-primaryColor-800 placeholder-primaryColor-500 p-2 sm:p-2"
+                            className="col-span-12 mb-4 lg:mb-0 font-facundosemiboldNEU shadow-lg lg:col-span-12 text-sm sm:text-lg  bg-transparent text-primaryColor-800 placeholder-primaryColor-500 p-2 sm:p-2"
                             type="text"
                             placeholder={`Begleitung ${index + 1} Name`}
                         />
@@ -195,12 +195,12 @@ const Form1 = (props) => {
                             />
                         </div>
                     ) : (
-                        <div className="w-full col-span-12 mt-8 lg:mt-4">
+                        <div className="w-full col-span-12 mt-8 lg:mt-4 text-right">
                             <button
                                 className="bg-[#3785d0] hover:bg-[#15395b] transition-all duration-300 px-8 py-2 rounded-lg text-white font-facundosemiboldNEU text-lg mt-4"
                                 type="submit"
                             >
-                                Anmeldung Absenden
+                                Jetzt Anmelden
                             </button>
                             {/* <button
                                 className="bg-primaryColor-700 mt-6 font-semibold hover-underline-animation z-20 flex items-center justify-center text-primaryColor-200 lg:mt-8 py-2 text-sm sm:text-base sm:py-3 px-6 min-w-[10rem] w-full uppercase rounded-md md:mt-8"
@@ -213,7 +213,8 @@ const Form1 = (props) => {
                 </form>
                 {success ? (
                     <div className="text-primaryColor font-facundosemiboldNEU w-96 mt-4">
-                        Vielen Dank für Ihre Nachricht!
+                        Vielen Dank für Ihre Anmeldung!<br></br>
+                        Sie erhalten in Kürze eine Bestätigung per Email.
                     </div>
                 ) : (
                     ""
