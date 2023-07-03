@@ -212,7 +212,7 @@ const Form1 = (props) => {
                     )}
                 </form>
                 {success ? (
-                    <div className="text-primaryColor font-facundosemiboldNEU w-96 mt-4">
+                    <div className="text-primaryColor font-facundosemiboldNEU col-span-12 mt-4">
                         Vielen Dank für Ihre Anmeldung!<br></br>
                         Sie erhalten in Kürze eine Bestätigung per Email.
                     </div>
