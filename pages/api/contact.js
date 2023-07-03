@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 //DB STUFF
-import createUser from "./createUser";
 import saveContactData from "./saveContactData";
 
 const sendEmail = async (to, subject, html, email) => {
