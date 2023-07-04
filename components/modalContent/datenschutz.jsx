@@ -65,9 +65,8 @@ const Datenschutzerklaerung = () => {
 
                 <h3>7. Fotos und Veröffentlichung:</h3>
                 <p className="mb-8">
-                    Bitte beachten Sie, dass während des Events Fotos gemacht werden können. Diese Fotos können
-                    anschließend auf unserer Website und in unseren Social-Media-Kanälen veröffentlicht werden. Wenn Sie
-                    nicht möchten, dass Ihre Person auf den Fotos erkennbar ist, informieren Sie uns bitte im Voraus.
+                    Auf der Veranstaltung werden Film- und Tonaufnahmen sowie Fotos gemacht, mit deren auch späteren
+                    Verwendung Sie sich durch den Besuch der Veranstaltung einverstanden erklären{" "}
                 </p>
 
                 <h3>8. Rechte der betroffenen Personen:</h3>
