@@ -123,7 +123,7 @@ export default async (req, res) => {
             `;
 
                 // send the email
-                await sendEmail("johabuch@gmail.com", `Anmeldung von ${name}`, html, email);
+                await sendEmail("info@epicon.pro", `Anmeldung von ${name}`, html, email);
 
                 // construct the confirmation email html
                 const htmlConfirm = `
