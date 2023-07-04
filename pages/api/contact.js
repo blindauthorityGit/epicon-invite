@@ -16,8 +16,8 @@ const sendEmail = async (to, subject, html, email) => {
             port: process.env.NEXT_DEV == "true" ? 587 : 587,
             secure: false,
             auth: {
-                user: process.env.NEXT_DEV == "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_W4YUSER,
-                pass: process.env.NEXT_DEV == "true" ? process.env.NEXT_W4YPASSWORD : process.env.NEXT_W4YPASSWORD,
+                user: process.env.NEXT_DEV == "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_USER,
+                pass: process.env.NEXT_DEV == "true" ? process.env.NEXT_W4YPASSWORD : process.env.NEXT_PASSWORD_EPICON,
             },
             socketTimeout: 60000, // Example: 60 seconds
         });
@@ -127,8 +127,8 @@ export default async (req, res) => {
 
                 // construct the confirmation email html
                 const htmlConfirm = `
-                  <p>Sehr geehrte/r ${name}</p>
-                  <p>Vielen Dank für Ihre Anmeldung für unser Event.</p>
+                  <p>Sehr geehrte/r ${name},</p>
+                  <p>vielen Dank für Ihre Anmeldung für unser Event am <strong> 15.09.2023 um 17:00 Uhr im Studio67</strong>.</p>
                   <p>Wir haben Sie inkl ${anzahl} Begleitpersonen für unseren Event registriert.</p>
                   ${
                       begleitung.length > 0
@@ -137,6 +137,8 @@ export default async (req, res) => {
                           : ""
                   }
                   <p>Wir freuen uns auf Ihren Besuch!</p>
+                  <p>Ihr Team von epicon</p>
+
                 `;
 
                 // send the confirmation email
