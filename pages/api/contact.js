@@ -12,19 +12,19 @@ const sendEmail = async (to, subject, html, email) => {
     try {
         // create a transporter object
         const transporter = nodemailer.createTransport({
-            host: process.env.NEXT_DEV == "true" ? "smtp.gmail.com" : "smtp.world4you.com",
-            port: process.env.NEXT_DEV == "true" ? 465 : 587,
+            host: process.env.NEXT_DEV == "true" ? "smtp.world4you.com" : "smtp.office365.com",
+            port: process.env.NEXT_DEV == "true" ? 587 : 587,
             secure: false,
             auth: {
-                user: process.env.NEXT_DEV == "true" ? process.env.NEXT_USER : process.env.NEXT_W4YUSER,
-                pass: process.env.NEXT_DEV == "true" ? process.env.NEXT_PASSWORD_EPICON : process.env.NEXT_W4YPASSWORD,
+                user: process.env.NEXT_DEV == "true" ? process.env.NEXT_W4YUSER : process.env.NEXT_W4YUSER,
+                pass: process.env.NEXT_DEV == "true" ? process.env.NEXT_W4YPASSWORD : process.env.NEXT_W4YPASSWORD,
             },
             socketTimeout: 60000, // Example: 60 seconds
         });
 
         // send the email
         await transporter.sendMail({
-            from: process.env.NEXT_DEV == "true" ? "johabuch@gmail.com" : "office@atelierbuchner.at",
+            from: process.env.NEXT_DEV == "true" ? "office@atelierbuchner.at" : "epicon.mail@epicon.pro",
             to,
             replyTo: email,
             subject,
@@ -74,12 +74,53 @@ export default async (req, res) => {
             try {
                 // construct the html message
                 const html = `
-                  <p><strong>Name:</strong> ${name}</p>
-                  <p><strong>Email:</strong> ${email}</p>
-                  <p><strong>Firma:<br/></strong> ${firma}</p>
-                  <p><strong>Anzahl Begleitpersonen:<br/></strong> ${anzahl}</p>
-                  ${begleitung.map((e, i) => `<p>${e}</p>`)}
-                `;
+                <table style="width: 100%; font-family: Arial, sans-serif; font-size: 16px;">
+                    <tr>
+                        <td style="text-align: left; width: 170px;">
+                            <strong>Name:</strong>
+                        </td>
+                        <td>
+                            ${name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; width: 170px;">
+                            <strong>Email:</strong>
+                        </td>
+                        <td>
+                            ${email}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; width: 170px;">
+                            <strong>Firma:</strong>
+                        </td>
+                        <td>
+                            ${firma}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; width: 170px;">
+                            <strong>Anzahl Begleitpersonen:</strong>
+                        </td>
+                        <td>
+                            ${anzahl}
+                        </td>
+                    </tr>
+                    ${begleitung.map(
+                        (e, i) => `
+                        <tr>
+                            <td style="text-align: left; width: 170px;">
+                                Begleitperson ${i + 1}:
+                            </td>
+                            <td>
+                                ${e}
+                            </td>
+                        </tr>
+                    `
+                    )}
+                </table>
+            `;
 
                 // send the email
                 await sendEmail("johabuch@gmail.com", `Anmeldung von ${name}`, html, email);
@@ -93,7 +134,7 @@ export default async (req, res) => {
                       begleitung.length > 0
                           ? `<p>Die Begleitpersonen:                   ${begleitung.map((e, i) => `<p>${e}</p>`)}
                   `
-                          : null
+                          : ""
                   }
                   <p>Wir freuen uns auf Ihren Besuch!</p>
                 `;

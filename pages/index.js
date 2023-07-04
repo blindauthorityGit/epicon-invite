@@ -6,6 +6,7 @@ import MainContainer from "../components/layout/mainContainer";
 import { Form1 } from "../components/forms";
 import { Modal, Overlay, ModalMobile } from "../components/modal";
 import ImpressumModal from "../components/modalContent";
+import DatenschutzModal from "../components/modalContent/datenschutz";
 import { useRouter } from "next/router";
 import { Rings } from "react-loader-spinner";
 
@@ -14,11 +15,14 @@ import BGDesktop from "../assets/bgDesktop.jpg";
 import TenYears from "../assets/SVG/10years.svg";
 import Studio67 from "../assets/1x/studio67.png";
 import Epicon from "../assets/SVG/epicon.svg";
+import Favicon from "../assets/SVG/favicon.svg";
 //DB
 import { PrismaClient } from "@prisma/client";
 
 export default function Home() {
     const [showModal, setShowModal] = useState(false);
+    const [showImpressum, setShowImpressum] = useState(false);
+    const [showDatenschutz, setShowDatenschutz] = useState(false);
     const [showSpinner, setShowSpinner] = useState(false);
     const [success, setSuccess] = useState(false);
     const router = useRouter();
@@ -66,7 +70,9 @@ export default function Home() {
     return (
         <div className="w-full 2xl:min-h-screen bg-cover" style={{ backgroundImage: `url(${BGDesktop.src})` }}>
             <Head>
-                <title>Site title</title>
+                <title>Epicon 15.09.2023 | Save the Date</title>
+                <link rel="icon" href={Favicon.src} />
+                <meta name="description" content="This is the description of my page." />
             </Head>
 
             {showModal ? (
@@ -74,13 +80,21 @@ export default function Home() {
                     <Modal
                         onClick={() => {
                             setShowModal(false);
+                            setShowModal(false);
+                            setShowImpressum(false);
+
+                            setShowDatenschutz(false);
                         }}
                     >
-                        <ImpressumModal></ImpressumModal>
+                        {showImpressum ? <ImpressumModal></ImpressumModal> : null}
+                        {showDatenschutz ? <DatenschutzModal></DatenschutzModal> : null}
                     </Modal>
                     <Overlay
                         onClick={() => {
                             setShowModal(false);
+                            setShowImpressum(false);
+
+                            setShowDatenschutz(false);
                         }}
                     ></Overlay>
                 </>
@@ -141,7 +155,7 @@ export default function Home() {
                         </button>
                     ) : null}
                     {success ? (
-                        <div className="text-primaryColor font-facundosemiboldNEU text-sm w-96 mt-4">
+                        <div className="text-primaryColor font-facundosemiboldNEU text-sm col-span-12 mt-4">
                             Danke für Ihre Bestätigung.
                         </div>
                     ) : (
@@ -156,14 +170,28 @@ export default function Home() {
                     <br /> Mobil: 0664 8890 8663
                 </div>
                 <div className="col-span-12 order-last px-8 mt-8 mb-16 flex justify-between font-facundosemiboldNEU">
-                    <div
-                        onClick={() => {
-                            setShowModal(true);
-                            console.log("BUBU");
-                        }}
-                        className="text-white hover:underline cursor-pointer font-facundosemiboldNEU"
-                    >
-                        Impressum
+                    <div className="wrapper">
+                        <div
+                            onClick={() => {
+                                setShowModal(true);
+                                setShowImpressum(true);
+                                console.log("BUBU");
+                            }}
+                            className="text-white hover:underline cursor-pointer font-facundosemiboldNEU"
+                        >
+                            Impressum
+                        </div>
+                        <div
+                            onClick={() => {
+                                setShowModal(true);
+                                setShowDatenschutz(true);
+
+                                console.log("BUBU");
+                            }}
+                            className="text-white hover:underline cursor-pointer font-facundosemiboldNEU"
+                        >
+                            Datenschutz
+                        </div>
                     </div>
                     <a href="https://www.epicon.pro/">
                         <img src={Epicon.src} className="w-16" alt="" />
