@@ -3,7 +3,7 @@ import { addDoc, collection } from "firebase/firestore/lite"; // Import the 'col
 
 export default async function saveContactData(data) {
     try {
-        const collectionRef = collection(db, "user"); // Replace 'contacts' with the name of your collection in Firestore
+        const collectionRef = collection(db, "anmeldungen"); // Replace 'contacts' with the name of your collection in Firestore
         console.log(data);
         // Add a new document with the data
         await addDoc(collectionRef, data);

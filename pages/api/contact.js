@@ -128,7 +128,7 @@ export default async (req, res) => {
                 // construct the confirmation email html
                 const htmlConfirm = `
                   <p>Sehr geehrte/r ${name},</p>
-                  <p>vielen Dank für Ihre Anmeldung für unser Event am <strong> 15.09.2023 um 17:00 Uhr im Studio67</strong>.</p>
+                  <p>vielen Dank für Ihre Anmeldung für unser Event am <strong> 15.09.2023 um 18:00 Uhr im Studio67</strong>.</p>
                   <p>Wir haben Sie inkl ${anzahl} Begleitpersonen für unseren Event registriert.</p>
                   ${
                       begleitung.length > 0
